@@ -1,0 +1,448 @@
+import React, { useState } from 'react';
+import { 
+  MessageSquare, 
+  Brain, 
+  AlertTriangle, 
+  CheckCircle, 
+  Zap, 
+  Users, 
+  ArrowRight,
+  Stethoscope,
+  XCircle,
+  Play,
+  Monitor,
+  Mic,
+  Clock,
+  FileText
+} from 'lucide-react';
+
+const Card = ({ children, className = "" }) => (
+  <div className={`bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden ${className}`}>
+    {children}
+  </div>
+);
+
+const Badge = ({ children, type = "neutral" }) => {
+  const colors = {
+    neutral: "bg-slate-100 text-slate-700",
+    warning: "bg-amber-100 text-amber-800",
+    success: "bg-emerald-100 text-emerald-800",
+    danger: "bg-red-100 text-red-800",
+    info: "bg-blue-100 text-blue-800"
+  };
+  return (
+    <span className={`px-2 py-1 rounded-md text-xs font-semibold uppercase tracking-wide ${colors[type]}`}>
+      {children}
+    </span>
+  );
+};
+
+export default function DemoCoachingApp() {
+  const [activeTab, setActiveTab] = useState('philosophy');
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'philosophy': return <PhilosophySection />;
+      case 'audit': return <TranscriptAudit />;
+      case 'blueprint': return <TheBlueprint />;
+      default: return <PhilosophySection />;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
+      {/* Header */}
+      <header className="bg-slate-900 text-white pt-12 pb-24 px-6 relative overflow-hidden">
+        <div className="max-w-5xl mx-auto relative z-10">
+          <div className="flex items-center space-x-2 mb-4 text-blue-400">
+            <Brain size={20} />
+            <span className="font-bold tracking-wider text-sm">SALES ENABLEMENT COACHING</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            Stop Asking. Start Prescribing.
+          </h1>
+          <p className="text-xl text-slate-300 max-w-2xl">
+            Why sending pre-webinar questionnaires kills momentum—and how <span className="text-white font-semibold">Market Research-Led Demos</span> win trust instantly.
+          </p>
+        </div>
+        
+        {/* Abstract shapes */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600 rounded-full blur-3xl opacity-20 -mr-16 -mt-16"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-600 rounded-full blur-3xl opacity-10 -ml-20 -mb-20"></div>
+      </header>
+
+      {/* Navigation */}
+      <div className="max-w-5xl mx-auto px-6 -mt-12 relative z-20">
+        <div className="bg-white rounded-lg shadow-lg p-2 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
+          <NavButton 
+            active={activeTab === 'philosophy'} 
+            onClick={() => setActiveTab('philosophy')} 
+            icon={<Stethoscope size={18} />}
+            title="The Philosophy"
+            subtitle="Why the 'Doctor' frame wins"
+          />
+          <NavButton 
+            active={activeTab === 'audit'} 
+            onClick={() => setActiveTab('audit')} 
+            icon={<AlertTriangle size={18} />}
+            title="The Transcript Audit"
+            subtitle="Fixing the recent webinar"
+          />
+          <NavButton 
+            active={activeTab === 'blueprint'} 
+            onClick={() => setActiveTab('blueprint')} 
+            icon={<FileText size={18} />}
+            title="The Run Sheet"
+            subtitle="Step-by-step Script"
+          />
+        </div>
+      </div>
+
+      {/* Main Content Area */}
+      <main className="max-w-5xl mx-auto px-6 py-12">
+        {renderContent()}
+      </main>
+      
+      <footer className="bg-slate-200 py-8 text-center text-slate-500 text-sm">
+        <p>Internal Coaching Resource • Improving the Shopify x Business Central Narrative</p>
+      </footer>
+    </div>
+  );
+}
+
+const NavButton = ({ active, onClick, icon, title, subtitle }) => (
+  <button 
+    onClick={onClick}
+    className={`flex-1 flex items-center p-4 rounded-md transition-all duration-200 text-left ${
+      active 
+        ? 'bg-blue-50 border border-blue-200 ring-2 ring-blue-100' 
+        : 'hover:bg-slate-50 border border-transparent'
+    }`}
+  >
+    <div className={`p-3 rounded-full mr-4 ${active ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-500'}`}>
+      {icon}
+    </div>
+    <div>
+      <div className={`font-bold ${active ? 'text-blue-900' : 'text-slate-700'}`}>{title}</div>
+      <div className="text-xs text-slate-500">{subtitle}</div>
+    </div>
+  </button>
+);
+
+/* --- SECTION 1: THE PHILOSOPHY --- */
+const PhilosophySection = () => (
+  <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="grid md:grid-cols-2 gap-8">
+      <div>
+        <h2 className="text-2xl font-bold mb-4 text-slate-800">The "Questionnaire Trap"</h2>
+        <p className="text-slate-600 mb-6 leading-relaxed">
+          The team wants to send questionnaires to tailor the demo. The intention is good, but the outcome is friction. 
+          Asking the prospect "What do you want to see?" signals that we are generalists who need help, rather than experts who know the cure.
+        </p>
+        <div className="bg-red-50 border-l-4 border-red-400 p-6 rounded-r-lg">
+          <h3 className="font-bold text-red-800 flex items-center mb-2">
+            <XCircle size={20} className="mr-2" />
+            Why Questionnaires Fail
+          </h3>
+          <ul className="space-y-3 text-red-800/80">
+            <li className="flex items-start">
+              <span className="mr-2">•</span>
+              <span><strong>High Friction:</strong> Every extra form field reduces registration by ~15%.</span>
+            </li>
+            <li className="flex items-start">
+              <span className="mr-2">•</span>
+              <span><strong>Low Authority:</strong> It asks the patient to diagnose themselves.</span>
+            </li>
+            <li className="flex items-start">
+              <span className="mr-2">•</span>
+              <span><strong>Delayed Value:</strong> It assumes we don't know their pain until they tell us.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <h2 className="text-2xl font-bold mb-4 text-slate-800">The "Specialist" Approach</h2>
+        <p className="text-slate-600 mb-6 leading-relaxed">
+          Instead, we use <strong>Market Research</strong>. We know every Shopify/BC user struggles with inventory sync, payout reconciliation, and shipping updates. We don't ask; we declare.
+        </p>
+        <div className="bg-emerald-50 border-l-4 border-emerald-400 p-6 rounded-r-lg">
+          <h3 className="font-bold text-emerald-800 flex items-center mb-2">
+            <CheckCircle size={20} className="mr-2" />
+            The "Doctor" Analogy
+          </h3>
+          <p className="text-emerald-800/90 italic mb-4">
+            "When you see a specialist, they don't ask what medicine you want. They look at your symptoms and say: 'I've seen this 100 times. Here is the cure.'"
+          </p>
+          <ul className="space-y-3 text-emerald-800/80">
+            <li className="flex items-start">
+              <span className="mr-2">•</span>
+              <span><strong>Proactive:</strong> "We know you hate reconciling Shopify Payouts."</span>
+            </li>
+            <li className="flex items-start">
+              <span className="mr-2">•</span>
+              <span><strong>High Authority:</strong> Establishes us as the experts immediately.</span>
+            </li>
+            <li className="flex items-start">
+              <span className="mr-2">•</span>
+              <span><strong>Universal Appeal:</strong> Hitting the "Top 3 Pains" captures 90% of the audience.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div className="bg-slate-100 p-8 rounded-xl text-center">
+      <h3 className="text-xl font-bold text-slate-800 mb-2">The Goal</h3>
+      <p className="text-slate-600 max-w-2xl mx-auto">
+        Move from <span className="line-through text-slate-400">"Tell us what you want to see"</span> to <span className="font-bold text-blue-600">"Let us show you the problems you didn't even know you could fix."</span>
+      </p>
+    </div>
+  </div>
+);
+
+/* --- SECTION 2: TRANSCRIPT AUDIT --- */
+const TranscriptAudit = () => (
+  <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="flex items-center justify-between">
+      <h2 className="text-2xl font-bold text-slate-800">Webinar "Teardown" & Critique</h2>
+      <Badge type="warning">Based on Dec 18 Transcript</Badge>
+    </div>
+    
+    <p className="text-slate-600">
+      We analyzed the recording to find opportunities where a "Market-Led" approach would have engaged the audience more effectively than a standard agenda.
+    </p>
+
+    {/* Critique Item 1 */}
+    <AuditCard 
+      time="00:28"
+      speaker="Mitesh (Host)"
+      quote="Good afternoon... This will be a 45 minute session where we will talk about problems and the solution... let's jump in and get started. So today's webinar we will cover about us and why you should choose Shopify Connector..."
+      critique="The Generic Opening"
+      analysis="This sets a passive tone. It focuses on logistics (45 mins) and the vendor ('About Us') rather than the customer's burning problem. This is why attendees tune out early."
+      betterWay="Research shows 40% of Shopify merchants oversell on Black Friday because their ERP is too slow. Today, we aren't just showing a connector; we're showing you how to never apologize for an out-of-stock item again."
+    />
+
+    {/* Critique Item 2 */}
+    <AuditCard 
+      time="40:46"
+      speaker="Kevin (Consultant)"
+      quote="My general philosophy would be more often is better... I don't think it needs to run every couple of minutes, but every 10-15 minutes. It really depends on the volume..."
+      critique="The Technical Explanation"
+      analysis="While accurate, this is a technical answer to an emotional problem. The customer is worried about 'Selling inventory I don't have.' Talking about sync intervals (10-15 mins) feels abstract."
+      betterWay="Let's pretend it's Black Friday. You get 500 orders in an hour. If you only sync every 15 minutes, you might oversell by 50 units. Our system handles that 'Panic Moment' by..."
+    />
+
+     {/* Critique Item 3 */}
+     <AuditCard 
+      time="41:23"
+      speaker="Mitesh (Host)"
+      quote="If you have any further questions or would you like to discuss your specific requirement, feel free to e-mail us..."
+      critique="The Passive Close"
+      analysis="Waiting for questions often results in silence (the team's main concern). Attendees are often too shy or confused to ask."
+      betterWay="While you type your questions, one thing Finance Directors always ask us is: 'How on earth do I match a $10k Shopify Payout to 500 individual orders?' Let me show you that trick right now..."
+    />
+  </div>
+);
+
+const AuditCard = ({ time, speaker, quote, critique, analysis, betterWay }) => (
+  <Card className="border-l-4 border-l-amber-400">
+    <div className="grid md:grid-cols-12 gap-0">
+      {/* Left Column: The Reality */}
+      <div className="md:col-span-5 p-6 bg-slate-50 border-r border-slate-100">
+        <div className="flex items-center space-x-2 mb-3">
+          <span className="text-xs font-mono text-slate-400">{time}</span>
+          <span className="text-xs font-bold text-slate-700 uppercase">{speaker}</span>
+        </div>
+        <div className="relative">
+          <span className="absolute -left-2 -top-2 text-4xl text-slate-200 font-serif">“</span>
+          <p className="text-sm text-slate-600 italic leading-relaxed pl-2 relative z-10">
+            {quote}
+          </p>
+        </div>
+        <div className="mt-4 pt-4 border-t border-slate-200">
+          <Badge type="warning">The Issue: {critique}</Badge>
+          <p className="text-xs text-slate-500 mt-2">{analysis}</p>
+        </div>
+      </div>
+
+      {/* Center Icon */}
+      <div className="hidden md:flex col-span-1 items-center justify-center bg-white z-10 -ml-3">
+        <div className="bg-white p-1 rounded-full border border-slate-200 shadow-sm">
+          <ArrowRight size={16} className="text-slate-400" />
+        </div>
+      </div>
+
+      {/* Right Column: The Fix */}
+      <div className="md:col-span-6 p-6 bg-white">
+        <div className="flex items-center space-x-2 mb-3">
+          <Zap size={16} className="text-blue-600" />
+          <span className="text-xs font-bold text-blue-700 uppercase">The Market-Led Fix</span>
+        </div>
+        <p className="text-sm text-slate-800 font-medium leading-relaxed bg-blue-50 p-4 rounded-lg border border-blue-100">
+          "{betterWay}"
+        </p>
+        <div className="mt-3 flex items-start space-x-2">
+          <CheckCircle size={14} className="text-emerald-500 mt-1" />
+          <span className="text-xs text-emerald-700">
+            <strong>Why it works:</strong> Addresses the pain point proactively without asking the user.
+          </span>
+        </div>
+      </div>
+    </div>
+  </Card>
+);
+
+/* --- SECTION 3: THE BLUEPRINT --- */
+const TheBlueprint = () => (
+  <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="text-center mb-10">
+      <h2 className="text-2xl font-bold text-slate-800">The 45-Minute "Run Sheet"</h2>
+      <p className="text-slate-600 mt-2 max-w-3xl mx-auto">
+        This is your exact script. It balances the standard "Intro + Agenda" flow with the high-authority "Market Research" approach. Use this instead of waiting for survey results.
+      </p>
+    </div>
+
+    <div className="space-y-6">
+      {/* Intro & Hook */}
+      <RunSheetRow 
+        time="0:00 - 0:02"
+        phase="Phase 1: The Intro & Hook"
+        color="border-purple-500"
+        visual={
+          <div className="flex flex-col items-center">
+             <Monitor size={32} className="text-purple-600 mb-2" />
+             <span className="text-xs font-bold text-purple-900">Slide: Title + Presenters</span>
+          </div>
+        }
+        script={
+          <>
+            <p className="mb-2"><strong>Mitesh:</strong> "Good afternoon everyone. I'm Mitesh, and I'm joined by Kevin, our Solution Architect."</p>
+            <p className="mb-2">"Before we dive into the agenda, I want to address the elephant in the room. <strong>Research shows that 40% of Shopify merchants oversell during peak season</strong> because their ERP sync is too slow. Today, we aren't just showing you a connector; we’re showing you how to never apologize to a customer for an out-of-stock item again."</p>
+          </>
+        }
+        note="Why this works: You do the intro, but you immediately validate their secret fear (overselling) before showing the agenda."
+      />
+
+      {/* The Market-Led Agenda */}
+      <RunSheetRow 
+        time="0:02 - 0:05"
+        phase="Phase 2: The 'Market-Led' Agenda"
+        color="border-blue-500"
+        visual={
+          <div className="flex flex-col items-center">
+             <Monitor size={32} className="text-blue-600 mb-2" />
+             <span className="text-xs font-bold text-blue-900">Slide: Agenda Bullet Points</span>
+          </div>
+        }
+        script={
+          <>
+            <p className="mb-2"><strong>Mitesh:</strong> "Here is how we will tackle that today:"</p>
+            <ul className="list-disc pl-5 mb-2 text-sm space-y-1">
+              <li>"First: <strong>Inventory Anxiety.</strong> We'll show you how to sync stock in near real-time."</li>
+              <li>"Second: <strong>The Finance Nightmare.</strong> Kevin will show how to reconcile a $10k payout with 500 orders automatically."</li>
+              <li>"Third: <strong>Multi-Store Chaos.</strong> Handling US, UK, and Wholesale stores in one Business Central instance."</li>
+            </ul>
+            <p>"Then, we'll open it up for Q&A."</p>
+          </>
+        }
+        note="Instead of saying 'Feature Overview', you are listing 'Problems We Will Solve'. This keeps the agenda but makes it compelling."
+      />
+
+      {/* The Story Transition */}
+      <RunSheetRow 
+        time="0:05 - 0:08"
+        phase="Phase 3: Setting the Scene"
+        color="border-indigo-500"
+        visual={
+          <div className="flex flex-col items-center">
+             <Monitor size={32} className="text-indigo-600 mb-2" />
+             <span className="text-xs font-bold text-indigo-900">Slide: 'The Scenario'</span>
+          </div>
+        }
+        script={
+          <>
+            <p className="mb-2"><strong>Mitesh:</strong> "I'm going to hand it over to Kevin. But I want us to roleplay for a second."</p>
+            <p>"Kevin, imagine it's Black Friday. We just got 500 orders in the last hour. The warehouse is freaking out. Show us how Business Central handles the pressure."</p>
+          </>
+        }
+        note="This gives the demo a 'Plot'. It's not just clicking buttons; it's surviving a crisis."
+      />
+
+      {/* The Demo & Objection Handling */}
+      <RunSheetRow 
+        time="0:08 - 0:35"
+        phase="Phase 4: The Demo (Active)"
+        color="border-amber-500"
+        visual={
+          <div className="flex flex-col items-center">
+             <Monitor size={32} className="text-amber-600 mb-2" />
+             <span className="text-xs font-bold text-amber-900">Screen Share: Business Central</span>
+          </div>
+        }
+        script={
+          <>
+            <p className="mb-2"><strong>Kevin:</strong> (During loading screens or sync times)</p>
+            <p className="italic text-slate-500 mb-2">"While this syncs, you might be wondering—does this work if I have a POS system too?"</p>
+            <p>"The answer is yes. Unlike other connectors, we treat POS as just another location, so your inventory is accurate across online and offline instantly."</p>
+          </>
+        }
+        note="Fill dead air with 'Pre-emptive Objections'. Answer the questions you KNOW they have."
+      />
+
+       {/* The FAQ Close */}
+       <RunSheetRow 
+        time="0:35 - 0:45"
+        phase="Phase 5: The FAQ Close"
+        color="border-emerald-500"
+        visual={
+          <div className="flex flex-col items-center">
+             <Users size={32} className="text-emerald-600 mb-2" />
+             <span className="text-xs font-bold text-emerald-900">Camera: Q&A Mode</span>
+          </div>
+        }
+        script={
+          <>
+            <p className="mb-2"><strong>Mitesh:</strong> "We have some questions coming in. But while you type, here is a question we get every single time:"</p>
+            <p className="mb-2">"<strong>'What happens if Shopify edits an order?'</strong>"</p>
+            <p>"Kevin, can you show them how we handle edited orders so the warehouse doesn't ship the wrong item?"</p>
+          </>
+        }
+        note="Don't wait for silence. Seed the Q&A with a high-value question to break the ice."
+      />
+    </div>
+  </div>
+);
+
+const RunSheetRow = ({ time, phase, script, visual, note, color }) => (
+  <div className={`flex flex-col md:flex-row bg-white rounded-xl shadow-sm border-l-4 ${color} overflow-hidden`}>
+    {/* Time & Phase */}
+    <div className="md:w-48 bg-slate-50 p-6 flex flex-col justify-center border-r border-slate-100 shrink-0">
+      <div className="flex items-center space-x-2 text-slate-500 mb-2">
+        <Clock size={16} />
+        <span className="text-sm font-mono font-bold">{time}</span>
+      </div>
+      <h3 className="font-bold text-slate-800 leading-tight">{phase}</h3>
+    </div>
+
+    {/* Visual Cue */}
+    <div className="md:w-40 bg-white p-6 flex flex-col items-center justify-center border-r border-slate-100 shrink-0">
+      {visual}
+    </div>
+
+    {/* Script & Notes */}
+    <div className="flex-1 p-6">
+      <div className="flex items-start space-x-3 mb-4">
+        <Mic size={20} className="text-slate-400 mt-1 shrink-0" />
+        <div className="text-slate-700 leading-relaxed font-serif text-lg">
+          {script}
+        </div>
+      </div>
+      
+      <div className="bg-slate-50 p-3 rounded-lg flex items-start space-x-2">
+        <Zap size={16} className="text-amber-500 mt-0.5 shrink-0" />
+        <p className="text-xs text-slate-500 italic"><strong>Coach's Note:</strong> {note}</p>
+      </div>
+    </div>
+  </div>
+);
